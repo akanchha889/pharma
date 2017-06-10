@@ -1,0 +1,5 @@
+﻿{
+    "connectionString": "mongodb://PharmaSuiticals:PharmaSuiticals@ds137271.mlab.com:37271/pharmasuiticaldata",
+    "apiUrl": "http://localhost:4000",
+    "secret": "REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING"
+}
