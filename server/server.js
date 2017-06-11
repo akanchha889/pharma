@@ -12,9 +12,10 @@ app.use(bodyParser.json());
 
 // use JWT auth to secure the api
 app.use(expressJwt({ secret: config.secret }).unless({ path: ['/users/authenticate', '/users/register'] }));
+//app.use(expressJwt({ secret: config.secret }).unless({ path: ['/customer'] }));
 
 
-// routes
+// routes  
 //, '/customer/register'
 //app.use('/customer', require('./controllers/customers.controller'));
 app.use('/users', require('./controllers/users.controller'));

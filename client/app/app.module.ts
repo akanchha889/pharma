@@ -12,19 +12,25 @@ import { AlertComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, UserService,CustomerService } from './_services/index';
 import { HomeComponent } from './home/index';
-import { LoginComponent } from './login/index';
+import { LoginComponent } from './login/index'; 
 import { RegisterComponent } from './register/index';
 import {AdminComponent} from './admin/index';
 import {CustomerComponent} from './customer/index';
 
+// Imports for loading & configuring the in-memory web api
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api/in-memory-web-api.module';
+//import { InMemoryDataService }  from './in-memory-data.service';  
 
+
+
+    
 @NgModule({
     imports: [
         BrowserModule,    
         FormsModule,
         HttpModule,
         routing,
-     
+           
     ],
     declarations: [
         AppComponent,
@@ -41,9 +47,10 @@ import {CustomerComponent} from './customer/index';
         AlertService,
         AuthenticationService,
         UserService,
-        CustomerService,
+        CustomerService
     ],
     bootstrap: [AppComponent]
 })
 
 export class AppModule { }
+

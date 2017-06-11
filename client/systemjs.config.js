@@ -26,6 +26,7 @@
             '@angular/http/testing': 'npm:@angular/http/bundles/http-testing.umd.js',
             '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+            
 
             // other libraries
             'rxjs': 'npm:rxjs'
@@ -45,7 +46,9 @@
           },
           'ag-grid': {
             defaultExtension: 'js'
-          }
+          },
+          'angular2-in-memory-web-api': {
+               main: 'index.js', defaultExtension: 'js' }
 
         }
     });

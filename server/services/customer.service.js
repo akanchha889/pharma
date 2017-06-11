@@ -1,18 +1,18 @@
-/*var config = require('config.json');
+var config = require('config.json');
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var Q = require('q');
 var mongo = require('mongoskin');
 var db = mongo.db(config.connectionString, { native_parser: true });
-db.bind('customer');
+db.bind('customers');
 
 var service = {};
 
 
 service.getAll = getAll;
 //service.getById = getById;
-service.create = create;
+//service.create = create;
 //service.update = update;
 //service.delete = _delete;
 
@@ -23,12 +23,13 @@ module.exports = service;
 function getAll() {
     var deferred = Q.defer();
 
-    db.customer.find().toArray(function (err, customers) {
+    db.customers.find().toArray(function (err, customers) {
         if (err) deferred.reject(err.name + ': ' + err.message);
-          customers = _.map(customers, function (customer) {
-            return _.omit(customer, 'hash');
-        });
+        if(customers){
             deferred.resolve(customers);
+        }else{
+            deferred.resolve();
+        }
     });
 
     return deferred.promise;
@@ -42,8 +43,8 @@ function getAll() {
         if (err) deferred.reject(err.name + ': ' + err.message);
            if (customer) {
             // return user (without hashed password)
-            deferred.resolve(_.omit(customer, 'hash'));
-        } else {
+             deferred.resolve(_.omit(customer, 'hash'));
+           } else {
             // user not found
             deferred.resolve();
         }

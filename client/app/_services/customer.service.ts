@@ -8,14 +8,14 @@ import { Customer } from '../_models/index';
 
 @Injectable()
 export class CustomerService {
-    constructor(private http: Http, private config: AppConfig, private customer : Customer) { }
+    constructor(private http: Http, private config: AppConfig) { }
 
-  /* getAll() {
-        return this.http.get(this.config.apiUrl + '/customer', this.jwt()).map((response: Response) => response.json());
+   getAll() {
+        return this.http.get(this.config.apiUrl + '/customers', this.jwt()).map((response: Response) => response.json());
    }
 
 
-    create(user: User) {
+  /*  create(user: User) {
         alert('create' + this.config.apiUrl + '/customer/register'+ user._id + '' + user.password);
         this.customer.password = user.password;
         this.customer.customerName = user.username;
@@ -44,7 +44,8 @@ export class CustomerService {
         alert('jwt()' + currentUser);
         if (currentUser && currentUser.token) {
             let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+
             return new RequestOptions({ headers: headers });
-        }
+        }  
     }
 }

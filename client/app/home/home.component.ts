@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
    
      ngOnInit() {
         this.loadAllUsers();
-    }
+    } 
 
     deleteUser(_id: string) {
         this.userService.delete(_id).subscribe(() => { this.loadAllUsers() });

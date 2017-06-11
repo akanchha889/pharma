@@ -14,6 +14,7 @@ export class UserService {
 
     getById(_id: string) {
         return this.http.get(this.config.apiUrl + '/users/' + _id, this.jwt()).map((response: Response) => response.json());
+
     }
 
    
@@ -36,6 +37,7 @@ export class UserService {
         
         // create authorization header with jwt token
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            alert('jwt()' + currentUser);
         if (currentUser && currentUser.token) {
             let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
             return new RequestOptions({ headers: headers });

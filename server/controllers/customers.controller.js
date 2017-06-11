@@ -1,15 +1,17 @@
-/*var config = require('config.json');
+var config = require('config.json');
 var express = require('express');
 var router = express.Router();
-var customerService = require('services/customer.service');*/
+var customerService = require('services/customer.service');
 
 
 // routes
 //router.post('/register', register);
-//router.get('/', getAll);
+router.get('/', getAll);
 //router.get('/current', getCurrent);
 //router.put('/:_id', update);
 //router.delete('/:_id', _delete);
+
+module.exports = router;
 
 /*function register(req, res){
      alert('customer controller register method' );
@@ -20,7 +22,7 @@ var customerService = require('services/customer.service');*/
         .catch(function (err) {
             res.status(400).send(err);
         });
-}
+}*/
 
 
 function getAll(req,res){
@@ -32,7 +34,7 @@ function getAll(req,res){
             res.sendStatus(400).send(err);
         });
 
-}*/
+}
 
 /*
 function getCurrent(req, res) {

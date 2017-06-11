@@ -1,7 +1,7 @@
 {
-    "name": "mean-angular2-registration-login-example-client",
+    "name": "mean-angular2-pharma-client",
     "version": "1.0.0",
-    "description": "Client for MEAN Stack with Angular 2 ",
+    "description": "Client for  Angular 2 ",
     "repository": {
         "type": "git",
         "url": "https://github.com/akanchha889/pharma.git"
@@ -27,6 +27,7 @@
         "@angular/upgrade": "~2.4.0",
         "ag-grid": "3.3.x",
         "ag-grid-ng2": "3.3.x",
+        "angular2-in-memory-web-api": "0.0.10",
 
 
         "core-js": "^2.4.1",
