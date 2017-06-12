@@ -35,6 +35,7 @@ export class CustomerComponent implements OnInit {
 
     private loadAllCustomer() {
            this.customerService.getAll().subscribe(customers => { this.customers = customers; });
+           
       
     }
 

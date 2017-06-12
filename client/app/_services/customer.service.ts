@@ -8,44 +8,26 @@ import { Customer } from '../_models/index';
 
 @Injectable()
 export class CustomerService {
+   // private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http, private config: AppConfig) { }
 
    getAll() {
-        return this.http.get(this.config.apiUrl + '/customers', this.jwt()).map((response: Response) => response.json());
+        return this.http.get(this.config.apiUrl + '/customer', this.jwt()).map((response: Response) => response.json());
    }
 
 
-  /*  create(user: User) {
-        alert('create' + this.config.apiUrl + '/customer/register'+ user._id + '' + user.password);
-        this.customer.password = user.password;
-        this.customer.customerName = user.username;
-        this.customer.custFirstName = user.firstName;
-        this.customer.custLastName = user.lastName;
-
-       // return this.http.post(this.config.apiUrl + '/customer/register', this.customer , this.jwt());
-    }*/
-
-   /* update(customer: Customer) {
-             alert('update');
-        return this.http.put(this.config.apiUrl + '/customer/' + customer._id, customer, this.jwt());
-    }
-
-    delete(_id: string) {
-
-              alert('delete');
-        return this.http.delete(this.config.apiUrl + '/customer/' + _id, this.jwt());
-    }*/
-
+ 
     // private helper methods
 
     private jwt() {
+        
         // create authorization header with jwt token
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        alert('jwt()' + currentUser);
+           alert('jwt()' + currentUser);
         if (currentUser && currentUser.token) {
             let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-
+              alert('headers' + headers);
             return new RequestOptions({ headers: headers });
-        }  
+        }
     }
 }

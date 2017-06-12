@@ -17,7 +17,7 @@ app.use(expressJwt({ secret: config.secret }).unless({ path: ['/users/authentica
 
 // routes  
 //, '/customer/register'
-//app.use('/customer', require('./controllers/customers.controller'));
+app.use('/customer', require('./controllers/customers.controller'));
 app.use('/users', require('./controllers/users.controller'));
 
 
