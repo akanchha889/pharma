@@ -1,7 +1,7 @@
 var config = require('config.json');
 var express = require('express');
 var router = express.Router();
-var customerService = require('services/customer.service');
+var doctorService = require('services/doctor.service');
 
 
 // routes
@@ -14,7 +14,7 @@ router.delete('/:_id', _delete);
 module.exports = router;
 
 function register(req, res){
-    customerService.create(req.body)
+    doctorService.create(req.body)
         .then(function () {
             res.sendStatus(200);
         })
@@ -25,9 +25,9 @@ function register(req, res){
 
    
 function getAll(req,res){
-    customerService.getAll()
-        .then(function(customers){
-            res.send(customers);
+    doctorService.getAll()
+        .then(function(doctors){
+            res.send(doctors);
         })
         .catch(function(err){
             res.sendStatus(400).send(err);
@@ -54,7 +54,7 @@ function getCurrent(req, res) {
 
 
 function update(req,res){
-    customerService.update(req.params._id,req.body)
+    doctorService.update(req.params._id,req.body)
         .then(function(){
             res.sendStatus(200);
 
@@ -65,7 +65,7 @@ function update(req,res){
 }
 
 function _delete(req,res){
-    customerService.delete(req.params._id)
+    doctorService.delete(req.params._id)
         .then(function(){
             sendStatus(200);
         })

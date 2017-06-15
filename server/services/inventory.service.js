@@ -5,7 +5,7 @@ var bcrypt = require('bcryptjs');
 var Q = require('q');
 var mongo = require('mongoskin');
 var db = mongo.db(config.connectionString, { native_parser: true });
-db.bind('customers');
+db.bind('inventories');
 
 var service = {};
 
@@ -23,14 +23,13 @@ module.exports = service;
 function getAll() {
     var deferred = Q.defer();
 
-    db.customers.find().toArray(function (err, customers) {
+    db.inventories.find().toArray(function (err, inventories) {
         if (err) deferred.reject(err.name + ': ' + err.message);
-          // return users (without hashed passwords)
-        customers = _.map(customers, function (customer) {
-            return _.omit(customer, 'hash');
+        inventories = _.map(inventories, function (inventory) {
+            return inventory;
         });
 
-        deferred.resolve(customers);
+        deferred.resolve(inventories);
     });
 
     return deferred.promise;
@@ -58,32 +57,28 @@ function getAll() {
 
 
 
-function create(customerParam) {
+function create(inventoryParam) {
     var deferred = Q.defer();
 
     // validation
 
-    db.customers.findOne(
-        { customerName : customerParam.customerName },
-        function (err, customer) {
-            if (err) deferred.reject(err.name + ': ' + err.message);
+    db.inventories.findOne(
+        { inventory_ID : inventoryParam.inventory_ID },
+        function (err, inventory) {
+            if (err) deferred.reject(err.inventory_ID + ': ' + err.message);
 
-            if (customer) {
+            if (inventory) {
                 // username already exists
-                deferred.reject('customerName "' + customerParam.customerName + '" is already taken');
+                deferred.reject('inventory_ID "' + inventoryParam.inventory_ID + '" is already taken');
             } else {
-                createUser();
+                createInventory();
             }
         });
 
-   function createUser() {
-          var customer = _.omit(customerParam, 'password');
-
-        // add hashed password to user object
-        customer.hash = bcrypt.hashSync(customerParam.password, 10);
-        db.customers.insert(
-            customer,
-            function (err, doc) {
+   function createInventory() { 
+          db.inventories.insert(
+            inventoryParam,
+            function (err, inventoryParam) {
                 if (err) deferred.reject(err.name + ': ' + err.message);
 
                 deferred.resolve();
@@ -94,47 +89,42 @@ function create(customerParam) {
 }
 
 
-function update(_id, customerParam) {
+function update(_id, inventoryParam) {
     var deferred = Q.defer();
 
     // validation
-    db.customers.findById(_id, function (err, customer) {
+    db.inventories.findById(_id, function (err, inventory
+    ) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
-        if (customer.customerName !== customerParam.customerName) {
-            // customerName has changed so check if the new customerName is already taken
-            db.customers.findOne(
-                { customerName: customerParam.customerName },
-                function (err, customer) {
+        if (inventory.inventory_ID !== inventoryParam.inventory_ID) {
+           
+            db.inventories.findOne(
+                { inventory_ID: inventoryParam.inventory_ID },
+                function (err, inventory) {
                     if (err) deferred.reject(err.name + ': ' + err.message);
 
-                    if (customer) {
-                        // customer name already exists
-                        deferred.reject('Customername "' + req.body.customerName + '" is already taken')
+                    if (inventory) {
+                        // inventory_ID name already exists
+                        deferred.reject('inventory_ID "' + req.body.inventory_ID + '" is already taken')
                     } else {
-                        updateCustomer();
+                        updateInventory();
                     }
                 });
         } else {
-            updateCustomer();
+            updateInventory();
         }
     });
 
-    function updateCustomer() {
+    function updateInventory() {
         // fields to update
         var set = {
-            custFirstName: customerParam.custFirstName,
-            custLastName: customerParam.custLastName,
-            customerName: customerParam.customerName,
+            quantity :inventoryParam.quantity,
+            name: inventoryParam.name,
+            price: inventoryParam.price,
+            inventory_ID: inventoryParam.inventory_ID,
         };
-
-
-
-
-         if (customerParam.password) {
-            set.hash = bcrypt.hashSync(customerParam.password, 10);
-        }
-        db.customers.update(
+        db.inventories.update(
             { _id: mongo.helper.toObjectID(_id) },
             { $set: set },
             function (err, doc) {
@@ -150,7 +140,7 @@ function update(_id, customerParam) {
 function _delete(_id) {
     var deferred = Q.defer();
 
-    db.customers.remove(
+    db.inventories.remove(
         { _id: mongo.helper.toObjectID(_id) },
         function (err) {
             if (err) deferred.reject(err.name + ':  ' + err.message);

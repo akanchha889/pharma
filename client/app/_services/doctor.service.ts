@@ -2,27 +2,27 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { AppConfig } from '../app.config';
-import { Customer } from '../_models/index';
+import { Doctor } from '../_models/index';
 
 
 @Injectable()
-export class CustomerService {
+export class DoctorService {
 
     constructor(private http: Http, private config: AppConfig) { }
 
     getAll() {
-        return this.http.get(this.config.apiUrl + '/customer', this.jwt()).map((response: Response) => response.json());
+        return this.http.get(this.config.apiUrl + '/doctor', this.jwt()).map((response: Response) => response.json());
     }
-    create(customer: Customer) {
-        return this.http.post(this.config.apiUrl + '/customer/register', customer, this.jwt());
+    create(doctor: Doctor) {
+        return this.http.post(this.config.apiUrl + '/doctor/register', doctor, this.jwt());
     }
 
     delete(_id: string) {
-        return this.http.delete(this.config.apiUrl + '/customer/' + _id, this.jwt());
+        return this.http.delete(this.config.apiUrl + '/doctor/' + _id, this.jwt());
     }
 
-    update(customer: Customer) {
-        return this.http.put(this.config.apiUrl + '/customer/' + customer._id, customer, this.jwt());
+    update(doctor: Doctor) {
+        return this.http.put(this.config.apiUrl + '/doctor/' + doctor._id, doctor, this.jwt());
     }
 
     // private helper methods

@@ -2,27 +2,27 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { AppConfig } from '../app.config';
-import { Customer } from '../_models/index';
+import { Inventory } from '../_models/index';
 
 
 @Injectable()
-export class CustomerService {
+export class InventoryService {
 
     constructor(private http: Http, private config: AppConfig) { }
 
     getAll() {
-        return this.http.get(this.config.apiUrl + '/customer', this.jwt()).map((response: Response) => response.json());
+        return this.http.get(this.config.apiUrl + '/inventory', this.jwt()).map((response: Response) => response.json());
     }
-    create(customer: Customer) {
-        return this.http.post(this.config.apiUrl + '/customer/register', customer, this.jwt());
+    create(inventory: Inventory) {
+        return this.http.post(this.config.apiUrl + '/inventory/register', inventory, this.jwt());
     }
 
     delete(_id: string) {
-        return this.http.delete(this.config.apiUrl + '/customer/' + _id, this.jwt());
+        return this.http.delete(this.config.apiUrl + '/inventory/' + _id, this.jwt());
     }
 
-    update(customer: Customer) {
-        return this.http.put(this.config.apiUrl + '/customer/' + customer._id, customer, this.jwt());
+    update(inventory: Inventory) {
+        return this.http.put(this.config.apiUrl + '/inventory/' + inventory._id, inventory, this.jwt());
     }
 
     // private helper methods

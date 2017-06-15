@@ -1,7 +1,7 @@
 var config = require('config.json');
 var express = require('express');
 var router = express.Router();
-var customerService = require('services/customer.service');
+var inventoryService = require('services/inventory.service');
 
 
 // routes
@@ -14,7 +14,7 @@ router.delete('/:_id', _delete);
 module.exports = router;
 
 function register(req, res){
-    customerService.create(req.body)
+    inventoryService.create(req.body)
         .then(function () {
             res.sendStatus(200);
         })
@@ -25,9 +25,9 @@ function register(req, res){
 
    
 function getAll(req,res){
-    customerService.getAll()
-        .then(function(customers){
-            res.send(customers);
+    inventoryService.getAll()
+        .then(function(inventories){
+            res.send(inventories);
         })
         .catch(function(err){
             res.sendStatus(400).send(err);
@@ -54,7 +54,7 @@ function getCurrent(req, res) {
 
 
 function update(req,res){
-    customerService.update(req.params._id,req.body)
+    inventoryService.update(req.params._id,req.body)
         .then(function(){
             res.sendStatus(200);
 
@@ -65,7 +65,7 @@ function update(req,res){
 }
 
 function _delete(req,res){
-    customerService.delete(req.params._id)
+    inventoryService.delete(req.params._id)
         .then(function(){
             sendStatus(200);
         })

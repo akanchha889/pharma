@@ -11,14 +11,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // use JWT auth to secure the api
-app.use(expressJwt({ secret: config.secret }).unless({ path: ['/users/authenticate', '/users/register'] }));
+app.use(expressJwt({ secret: config.secret }).unless({ path: ['/users/authenticate', '/users/register', '/customer/register','/doctor/register','/inventory/register'] }));
 //app.use(expressJwt({ secret: config.secret }).unless({ path: ['/customer'] }));
 
 
-// routes  
+// routes    
 //, '/customer/register'
 app.use('/customer', require('./controllers/customers.controller'));
 app.use('/users', require('./controllers/users.controller'));
+app.use('/doctor', require('./controllers/doctors.controller'));
+app.use('/inventory', require('./controllers/inventories.controller'));
 
 
 

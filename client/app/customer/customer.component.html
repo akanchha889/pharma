@@ -1,36 +1,68 @@
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li ><a href="/"> <span class="glyphicon glyphicon-home"></span></a></li>
-        <li ><a href="/">Inventory</a></li>
-       <li ><a [routerLink]="['/customers']"> Customer</a></li>
-        <li><a href="/">Doctor</a></li>
-        <li><a href="/">Order</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-    
-      <li><a [routerLink]="['/login']"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-    </ul>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/"> <span class="glyphicon glyphicon-home"></span></a></li>
+          <li ><a [routerLink]="['/inventories']">Inventory</a></li>
+          <li><a [routerLink]="['/customers']"> Customer</a></li>
+          <li><a [routerLink]="['/doctors']">Doctor</a></li>
+          <li><a href="/">Order</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+
+          <li><a [routerLink]="['/login']"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 </div>
 
- <div class="col-md-6 col-md-offset-3">
-   <h1>Hi {{currentUser.firstName}}!</h1>
-    <p>You're logged in !</p>
 
-    <h3>All registered users:</h3>
-   
-    <ul>
-        <li *ngFor="let customer of customers">
-            {{customer.customerName}} ({{customer.custFirstName}} {{customer.custLastName}})
-              <a (click)="deleteUser(user._id)">Delete</a> 
-        </li>
-    </ul>
-  
+
+<div class="container">
+  <h3>All registered Customers:</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>CustomerId</th>
+        <th>FirstName</th>
+        <th>Last Name</th>
+        <th>Action </th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let customer of customers; let i = index;" (click)="
+      onSelect(customer, i)" class="truck-list-body">
+        <td>
+          <span *ngIf="editedIndex !== i">{{customer.customerName}}</span>
+          <input type="text" class="form-control" [(ngModel)]="customer.customerName" value={{customer.customerName}} *ngIf="editedIndex === i">
+        </td>
+        <td>
+          <span *ngIf="editedIndex !== i">{{customer.custFirstName}}</span>
+          <input type="text" class="form-control" [(ngModel)]="customer.custFirstName" value={{customer.custFirstName}} *ngIf="editedIndex === i">
+        </td>
+        <td>
+          <span *ngIf="editedIndex !== i">{{customer.custLastName}}</span>
+          <input type="text" class="form-control" [(ngModel)]="customer.custLastName" value={{customer.custLastName}} *ngIf="editedIndex === i">
+        </td>
+        <td> <button *ngIf="editedIndex === i" (click)= 'editCustomer(customer)' type="button" class="btn btn-default" aria-label="Left Align"> 
+              <span  class="glyphicon glyphicon-pencil" aria-hidden="true" aria-label="Left Align"></span>
+           </button> 
+             <span *ngIf="editedIndex !== i" class="glyphicon glyphicon-pencil" aria-hidden="true" ></span>
+ 
+                
+          <button (click)='deleteCustomer(customer._id)' type="button" class="btn btn-default" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  </button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div> <a [routerLink]="['/addCustomer']" class="btn btn-link">Add Customer</a> </div>
 </div>
-

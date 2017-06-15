@@ -11,13 +11,6 @@ import { AlertService, UserService,CustomerService } from '../_services/index';
    
        
 })
-/*@NgModule({
-
-  declarations: [ Customer ],
-      providers : [CustomerService]
-
-})*/
-
 export class RegisterComponent {
     model: any = {};
     loading = false;
@@ -27,8 +20,6 @@ export class RegisterComponent {
         private router: Router,
         private userService: UserService,
         private alertService: AlertService,
-      //  private customerService : CustomerService
-       // private customer : Customer
        ) {}
 
         
@@ -46,16 +37,7 @@ export class RegisterComponent {
              this.model.isAdmin = true;
              this.route = '/admin';
 
-       }else if(this.model.userRole == 'Customer'){
-          /*  alert('customerService.create');
-             this.customer.customerName = this.model.username;
-              this.customer.custFirstName = this.model.firstName;
-              this.customer.custLastName = this.model.lastName;
-              this.customer.password = this.model.password;
-               alert('customerService.create' +  this.customer.custLastName);*/
-             // this.customerService.create(this.model);
-              this.route = '/customer';
-      }else {
+       }else {
              this.model.isAdmin = false;
              this.route = '/login';
          } 

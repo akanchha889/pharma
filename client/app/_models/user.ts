@@ -6,7 +6,4 @@
     lastName: string;
     userRole :string;
     isAdmin: boolean;
-   //userEmail:string;
-  //  createdDate: Date;
-   //deletedDate:Date;
 }

@@ -5,7 +5,7 @@ var bcrypt = require('bcryptjs');
 var Q = require('q');
 var mongo = require('mongoskin');
 var db = mongo.db(config.connectionString, { native_parser: true });
-db.bind('customers');
+db.bind('doctors');
 
 var service = {};
 
@@ -23,14 +23,14 @@ module.exports = service;
 function getAll() {
     var deferred = Q.defer();
 
-    db.customers.find().toArray(function (err, customers) {
+    db.doctors.find().toArray(function (err, doctors) {
         if (err) deferred.reject(err.name + ': ' + err.message);
           // return users (without hashed passwords)
-        customers = _.map(customers, function (customer) {
-            return _.omit(customer, 'hash');
+        doctors = _.map(doctors, function (doctor) {
+            return _.omit(doctor, 'hash');
         });
 
-        deferred.resolve(customers);
+        deferred.resolve(doctors);
     });
 
     return deferred.promise;
@@ -58,31 +58,31 @@ function getAll() {
 
 
 
-function create(customerParam) {
+function create(doctorParam) {
     var deferred = Q.defer();
 
     // validation
 
-    db.customers.findOne(
-        { customerName : customerParam.customerName },
-        function (err, customer) {
+    db.doctors.findOne(
+        { doctorID : doctorParam.doctorID },
+        function (err, doctor) {
             if (err) deferred.reject(err.name + ': ' + err.message);
 
-            if (customer) {
+            if (doctor) {
                 // username already exists
-                deferred.reject('customerName "' + customerParam.customerName + '" is already taken');
+                deferred.reject('DoctorID "' + doctorParam.doctorID + '" is already taken');
             } else {
-                createUser();
+                createDoctor();
             }
         });
 
-   function createUser() {
-          var customer = _.omit(customerParam, 'password');
+   function createDoctor() {
+          var doctor = _.omit(doctorParam, 'password');
 
         // add hashed password to user object
-        customer.hash = bcrypt.hashSync(customerParam.password, 10);
-        db.customers.insert(
-            customer,
+        doctor.hash = bcrypt.hashSync(doctorParam.password, 10);
+        db.doctors.insert(
+            doctor,
             function (err, doc) {
                 if (err) deferred.reject(err.name + ': ' + err.message);
 
@@ -94,23 +94,23 @@ function create(customerParam) {
 }
 
 
-function update(_id, customerParam) {
+function update(_id, doctorParam) {
     var deferred = Q.defer();
 
     // validation
-    db.customers.findById(_id, function (err, customer) {
+    db.doctors.findById(_id, function (err, doctor) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
-        if (customer.customerName !== customerParam.customerName) {
+        if (doctor.doctorID !== doctorParam.doctorID) {
             // customerName has changed so check if the new customerName is already taken
-            db.customers.findOne(
-                { customerName: customerParam.customerName },
-                function (err, customer) {
+            db.doctors.findOne(
+                { doctorID: doctorParam.doctorID },
+                function (err, doctor) {
                     if (err) deferred.reject(err.name + ': ' + err.message);
 
-                    if (customer) {
+                    if (doctor) {
                         // customer name already exists
-                        deferred.reject('Customername "' + req.body.customerName + '" is already taken')
+                        deferred.reject('doctorID "' + req.body.doctorID + '" is already taken')
                     } else {
                         updateCustomer();
                     }
@@ -123,18 +123,14 @@ function update(_id, customerParam) {
     function updateCustomer() {
         // fields to update
         var set = {
-            custFirstName: customerParam.custFirstName,
-            custLastName: customerParam.custLastName,
-            customerName: customerParam.customerName,
+            doctorFirstName: doctorParam.doctorFirstName,
+            doctorLastName: doctorParam.doctorLastName,
+            doctorID: doctorParam.doctorID,
         };
-
-
-
-
-         if (customerParam.password) {
-            set.hash = bcrypt.hashSync(customerParam.password, 10);
+        if (doctorParam.password) {
+            set.hash = bcrypt.hashSync(doctorParam.password, 10);
         }
-        db.customers.update(
+        db.doctors.update(
             { _id: mongo.helper.toObjectID(_id) },
             { $set: set },
             function (err, doc) {
@@ -150,7 +146,7 @@ function update(_id, customerParam) {
 function _delete(_id) {
     var deferred = Q.defer();
 
-    db.customers.remove(
+    db.doctors.remove(
         { _id: mongo.helper.toObjectID(_id) },
         function (err) {
             if (err) deferred.reject(err.name + ':  ' + err.message);
