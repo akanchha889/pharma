@@ -22,7 +22,7 @@
 </nav>
 </div>
 
-<div class="container">
+<div class="login jumbotron center-block">
   <h3>All registered users:</h3>
   <table class="table">
     <thead>
@@ -37,26 +37,25 @@
  
     <tbody>
      
-      <tr *ngFor="let user of users; let i = index;" (click)="
-      onSelect(user, i)" class="truck-list-body">
+      <tr *ngFor="let user of users;"  class="truck-list-body">
         <td>
-          <span *ngIf="editedIndex !== i">{{user.username}}</span>
-          <input type="text" class="form-control" [(ngModel)]="user.username" value={{user.username}} *ngIf="editedIndex === i">
+          <span>{{user.username}} </span>
+        
         </td>
         <td>
-          <span *ngIf="editedIndex !== i">{{user.firstName}}</span>
-          <input type="text" class="form-control" [(ngModel)]="user.firstName" value={{user.firstName}} *ngIf="editedIndex === i">
+          <span >{{user.firstName}}</span>
+         
         </td>
         <td>
-          <span *ngIf="editedIndex !== i">{{user.lastName}}</span>
-          <input type="text" class="form-control" [(ngModel)]="user.lastName" value={{user.lastName}} *ngIf="editedIndex === i">
+          <span>{{user.lastName}}</span>
+         
         </td>
         
           <button (click)='deleteUser(user._id)' type="button" class="btn btn-default" aria-label="Left Align">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                  </button>
+          </button>
 
-        </td>
+    
       </tr>
     </tbody>
   </table>

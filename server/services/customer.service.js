@@ -37,27 +37,6 @@ function getAll() {
 }
 
 
-
-/*function getById(_id) {
-    var deferred = Q.defer();
-
-    db.customer.findById(_id, function (err, customer) {
-        if (err) deferred.reject(err.name + ': ' + err.message);
-           if (customer) {
-            // return user (without hashed password)
-             deferred.resolve(_.omit(customer, 'hash'));
-           } else {
-            // user not found
-            deferred.resolve();
-        }
-    });
-
-    return deferred.promise;
-}*/
-
-
-
-
 function create(customerParam) {
     var deferred = Q.defer();
 

@@ -35,23 +35,18 @@ export class DoctorComponent implements OnInit {
     this.editedIndex = i;
   }
   editDoctor(doctor: Doctor) {
-
-    this.route = '/doctors';
     this.doctorService.update(doctor).subscribe(() => {
       this.loadAllDoctors();
-      this.router.navigate([this.route]);
     });
   }
 
   deleteDoctor(_id: string) {
     this.doctorService.delete(_id).subscribe(() => { this.loadAllDoctors() });
-    this.router.navigate(['/doctors']);
+ 
   }
 
   private loadAllDoctors() {
     this.doctorService.getAll().subscribe(doctors => { this.doctors = doctors; });
-
-
   }
 
 

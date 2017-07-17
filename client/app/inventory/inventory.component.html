@@ -26,14 +26,15 @@
   <table class="table">
     <thead>
       <tr>
+        <th>Inventory ID</th>
         <th>Inventory Name</th>
         <th>Price</th>
         <th>Quantity</th>
         <th>Action </th>
-
+ 
       </tr>
     </thead>
- 
+  
     <tbody>
      
       <tr *ngFor="let inventory of inventories; let i = index;" (click)="
@@ -47,7 +48,7 @@
           <input type="text" class="form-control" [(ngModel)]="inventory.name" value={{inventory.name}} *ngIf="editedIndex === i">
         </td>
         <td>
-          <span *ngIf="editedIndex !== i">{{inventory.price}}</span>
+          <span *ngIf="editedIndex !== i">{{inventory.price | currency:'INR':true}}</span>
           <input type="text" class="form-control" [(ngModel)]="inventory.price" value={{inventory.price}} *ngIf="editedIndex === i">
         </td>
         <td>
